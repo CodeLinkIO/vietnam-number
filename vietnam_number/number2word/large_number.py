@@ -14,15 +14,17 @@ def n2w_large_number(numbers: str):
         Chuỗi chữ số đầu ra.
 
     """
-    # Chúng ta cần duyệt chuổi số đầu vào từ phải sang trái nhằm phân biệt các giá trị từ nhỏ đến lớn.
-    # tương tự như khi chúng ta xữ lý cho hàm n2w_hundreds
+    total_number = []
+
+    isNegative = False
+    if numbers[0] == '-':
+        numbers = numbers[1:]
+        isNegative = True
+
     reversed_large_number = numbers[::-1]
 
-    # Chia chuỗi số đầu vào thành các nhóm con có 3 phần tử.
-    # vì cứ 3 phần tử số lại tạo thành một lớp giá trị, như lớp trăm, lớp nghìn, lớp triệu...
     reversed_large_number = chunks(reversed_large_number, 3)
 
-    total_number = []
     for e in range(0, len(reversed_large_number)):
 
         if e == 0:
@@ -38,10 +40,12 @@ def n2w_large_number(numbers: str):
             value_of_billion = reversed_large_number[3][::-1]
             total_number.append(n2w_hundreds(value_of_billion) + ' tỷ ')
 
+    if isNegative:
+        total_number.append(' âm ')
     return ''.join(total_number[::-1]).strip()
 
 
 if __name__ == '__main__':
 
-    number = '115205201211'
+    number = '-115205201211'
     print(n2w_large_number(number))

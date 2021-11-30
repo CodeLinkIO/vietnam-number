@@ -42,7 +42,8 @@ def n2w_hundreds(numbers: str):
         elif e == 1:
             total_number.append(units[reversed_hundreds[e]] + ' mươi ')
         elif e == 2:
-            total_number.append(units[reversed_hundreds[e]] + ' trăm ')
+            if (reversed_hundreds != '000'):
+                total_number.append(units[reversed_hundreds[e]] + ' trăm ')
 
     # vd: ta có total_number = ['không', 'hai mươi ', 'một trăm ']
     # có nghĩa là ta muốn kết quả cuối cùng là: ['một trăm ', 'hai mươi ', 'không']
@@ -71,7 +72,7 @@ def n2w_hundreds(numbers: str):
                 total_number[idx] = 'lăm'
 
         if value == 'không mươi ':
-            total_number[idx] = 'lẽ '
+            total_number[idx] = 'lẻ '
 
         if value == 'một mươi ':
             total_number[idx] = 'mười '

@@ -1,3 +1,4 @@
+import re
 from vietnam_number.number2word.hundreds import n2w_hundreds
 from vietnam_number.number2word.utils.base import chunks
 
@@ -45,7 +46,33 @@ def n2w_large_number(numbers: str):
     return ''.join(total_number[::-1]).strip()
 
 
+def n2w_float_number(numbers: str):
+    """Hàm chuyển đổi các số thập phân
+
+    Args:
+        numbers (str): Chuỗi số đầu vào.
+
+    Returns:
+        Chuỗi chữ đưỢc chuyển đổi.
+
+    """
+    output = []
+    part = numbers.split(',')
+    if len(part) < 2:
+        return n2w_large_number(numbers)
+    else:
+        output.append(n2w_large_number(part[0]))
+        zero_parts = ' phẩy '
+        while (len(part[1]) > 0 and part[1][0] == '0'):
+            zero_parts += 'không '
+            part[1] = part[1][1:]
+        if (len(part[1]) > 0):
+            output.append(zero_parts)
+            output.append(n2w_large_number(part[1]))
+    return ''.join(output).strip()
+
+
 if __name__ == '__main__':
 
-    number = '-115205201211'
-    print(n2w_large_number(number))
+    number = '9,082'
+    print(n2w_float_number(number))

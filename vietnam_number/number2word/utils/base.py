@@ -37,7 +37,9 @@ def pre_process_n2w(number: str):
         ',': '',
     }
 
-    # xóa các ký tự đặt biệt
+    while (number[0] == '0'):
+        number = number[1:]
+
     for key, value in char_to_replace.items():
         number = number.replace(key, value)
 

@@ -27,19 +27,17 @@ def n2w_large_number(numbers: str):
     reversed_large_number = chunks(reversed_large_number, 3)
 
     for e in range(0, len(reversed_large_number)):
-
+        value = reversed_large_number[e][::-1]
         if e == 0:
-            value_of_hundred = reversed_large_number[0][::-1]
-            total_number.append(n2w_hundreds(value_of_hundred))
+            total_number.append(n2w_hundreds(value))
+        if value == '000':
+            continue
         if e == 1:
-            value_of_thousand = reversed_large_number[1][::-1]
-            total_number.append(n2w_hundreds(value_of_thousand) + ' nghìn ')
+            total_number.append(n2w_hundreds(value) + ' nghìn ')
         if e == 2:
-            value_of_million = reversed_large_number[2][::-1]
-            total_number.append(n2w_hundreds(value_of_million) + ' triệu ')
+            total_number.append(n2w_hundreds(value) + ' triệu ')
         if e == 3:
-            value_of_billion = reversed_large_number[3][::-1]
-            total_number.append(n2w_hundreds(value_of_billion) + ' tỷ ')
+            total_number.append(n2w_hundreds(value) + ' tỷ ')
 
     if isNegative:
         total_number.append(' âm ')
@@ -74,5 +72,5 @@ def n2w_float_number(numbers: str):
 
 if __name__ == '__main__':
 
-    number = '9,082'
-    print(n2w_float_number(number))
+    number = '9,'
+    print('9, điểm tăng'.replace(number, n2w_float_number(number)))

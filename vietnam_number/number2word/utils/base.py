@@ -1,4 +1,6 @@
+
 from vietnam_number.number2word.data import units
+import re
 
 
 def chunks(lst, n):
@@ -16,7 +18,7 @@ def chunks(lst, n):
     """
     chunks_lst = []
     for i in range(0, len(lst), n):
-        chunks_lst.append(lst[i : i + n])
+        chunks_lst.append(lst[i: i + n])
 
     return chunks_lst
 
@@ -30,30 +32,20 @@ def pre_process_n2w(number: str):
     Returns:
         Chuỗi số sau khi được tiền xữ lý.
     """
-    clean_number = ''
-
     char_to_replace = {
         ' ': '',
-        '-': '',
         '.': '',
-        ',': '',
     }
 
-    # xóa các ký tự đặt biệt
     for key, value in char_to_replace.items():
         number = number.replace(key, value)
 
+    number_pattern = r'^-?[0-9]\d*[,]{0,1}[\d]*$'
     # Kiểm tra tính hợp lệ của đầu vào
-    if not number.isdigit():
-        raise ValueError('Đầu vào không phải là kiểu chuỗi chỉ chứa các ký tự số (isdigit)!')
+    if not re.match(number_pattern, number):
+        raise ValueError('Đầu vào không hợp lệ!')
 
-    # xóa các ký tự số không có trong unit
-    for element in number:
-        if element in units:
-            clean_number += element
+    return number
 
-    # Thông báo lỗi nếu người dùng nhập đầu vào không hợp lệ!
-    if not clean_number:
-        raise ValueError("Số không hợp lệ, vui lòng nhập số đúng định dạng!")
 
-    return clean_number
+pre_process_n2w('-112')
